@@ -6,8 +6,19 @@ import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
 
-    private val _MontoTotal = MutableLiveData<String>().apply {
-        value = "$0.000.000,00"
-    }
+    private var _MontoTotal = MutableLiveData<String>()
+
     val MontoTotal: LiveData<String> = _MontoTotal
+
+    private var _GananciasBrutas = MutableLiveData<String>()
+    val GananciasBrutas: LiveData<String> = _MontoTotal
+
+    private var _GananciasLiquidas = MutableLiveData<String>()
+    val GananciasLiquidas: LiveData<String> = _MontoTotal
+
+    init {
+        _MontoTotal.value = "$0.000.000,00"
+        _GananciasBrutas.value = "$0.000.000,00"
+        _GananciasLiquidas.value = "$0.000.000,00"
+    }
 }
