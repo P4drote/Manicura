@@ -11,4 +11,40 @@
     <string name="titulo_liquidas">Liquidas</string>
     <string name="imagen_ajustes">imagen_ajustes</string>
     <string name="imagen_icono">imagen_icono</string>
+    <string name="Titulo_Ajustes">Ajustes</string>
+    <string name="title_activity_ajustes_fragment">AjustesFragment</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="btn_Atras">btn_Atras</string>
+    <string name="NombreTienda">Nombre de la tienda</string>
+    <string name="tienda">Tienda:</string>
+    <string name="Imagen_Tienda">Imagen Tienda</string>
+    <string name="editar">Editar</string>
+    <string name="descripcionTienda">Nombre de la tienda donde trabajas</string>
+    <string name="ImagenInicioNotificacion">Inicio Notificacion</string>
+    <string name="TituloInicioNotificacion">Inicio de Notificación</string>
+    <string name="DescripcionInicioNotifiacion">Cuando quieres que empiece a notificar la pronta vuelta de un cliente (dias)</string>
+    <string name="ImagenPorcentajeGanancia">Imagen de Porcentaje de Ganancia</string>
+    <string name="TituloPorcentajedeGanancia">Porcentaje de ganancia:</string>
+    <string name="DescripcionPorcentajedeGanancia">Coloca el porcentaje de ganancia (solo los numeros)</string>
+    <string name="ImagenFindeNotificacion">Imagen de Fin de Notificación</string>
+    <string name="TituloFInNotificacion">Fin de Notificación</string>
+    <string name="DescripcionFinNotificacion">Cuando quieres no ver mas la notificación (dias)</string>
+    <string name="ib_ajustes">ImagenButtonAjustes</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="titulo_NuevoServicio">Nuevo Servicio</string>
+    <string name="hint_NombredeCliente">Nombre de Client@</string>
+    <string name="chip_Manos">Manos</string>
+    <string name="chip_Pies">Pies</string>
+    <string name="hint_MontoACobrar">Monto a cobrar</string>
+    <string name="titulo_UltimasVisitas">Ultimas Visitas:</string>
+    >
 </resources>

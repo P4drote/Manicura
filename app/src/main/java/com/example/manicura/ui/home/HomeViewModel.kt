@@ -3,9 +3,6 @@ package com.example.manicura.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.manicura.AdaptadorPrincipal
 import com.example.manicura.Notificacion
 
 class HomeViewModel : ViewModel() {
@@ -20,16 +17,11 @@ class HomeViewModel : ViewModel() {
     private var _GananciasLiquidas = MutableLiveData<String>()
     val GananciasLiquidas: LiveData<String> = _MontoTotal
 
-
-
     init {
         _MontoTotal.value = "$0.000.000,00"
         _GananciasBrutas.value = "$0.000.000,00"
         _GananciasLiquidas.value = "$0.000.000,00"
-
-
     }
-
 
     fun llenarNotificaciones() : ArrayList<Notificacion> {
         val lista = ArrayList<Notificacion>()
