@@ -1,19 +1,19 @@
 package com.example.manicura
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
+
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.lista_notificaciones.view.*
-import java.util.*
 
+private val ManoVerde : Int = R.mipmap.mano_verde
+private val ManoGris : Int = R.mipmap.mano_gris
+private val PieVerde: Int = R.mipmap.pie_verde
+private val PieGris: Int = R.mipmap.pie_gris
 
 class AdaptadorPrincipal(private var lista: List<Notificacion>, private var contexto: Context) : RecyclerView.Adapter<AdaptadorPrincipal.ViewHolder>() {
 
@@ -41,17 +41,17 @@ class AdaptadorPrincipal(private var lista: List<Notificacion>, private var cont
             vista.tvNombreCliente.text = notificacion.Nombre
             vista.tvMensaje.text = notificacion.Mensaje
             if (notificacion.manos){
-                vista.ivManos.setImageResource(R.mipmap.mano_verde)
+                vista.ivManos.setImageResource(ManoVerde)
             }else{
-                vista.ivManos.setImageResource(R.mipmap.mano_gris)
+                vista.ivManos.setImageResource(ManoGris)
             }
             if(notificacion.pies){
-                vista.ivPies.setImageResource(R.mipmap.pie_verde)
+                vista.ivPies.setImageResource(PieVerde)
             }else{
-                vista.ivPies.setImageResource(R.mipmap.pie_gris)
+                vista.ivPies.setImageResource(PieGris)
             }
 
-            vista.tvIcon.text = notificacion.Nombre.substring(0,1);
+            vista.tvIcon.text = notificacion.Nombre.substring(0,1)
 
 //            val mRandom = Random()
 //            val color: Int =
