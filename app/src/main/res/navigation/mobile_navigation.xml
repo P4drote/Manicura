@@ -19,10 +19,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.manicura.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_clientes"
+        android:name="com.example.manicura.ui.clientes.ClientesFragment"
+        android:label="@string/title_clientes"
+        tools:layout="@layout/fragment_clientes" />
 
     <fragment
         android:id="@+id/navigation_notifications"

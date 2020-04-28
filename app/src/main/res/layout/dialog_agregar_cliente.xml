@@ -32,7 +32,7 @@
             android:padding="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_NuevoCliente"
+                android:id="@+id/NuevoCliente"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nombre de client@"
@@ -45,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:background="@color/colorPrimaryDark"
+            android:onClick="@{ () -> agregarClienteViewModel.onInsertarCliente(NuevoCliente.getText().toString()) }"
             android:text="Registrar" />
     </LinearLayout>
 

@@ -1,112 +1,83 @@
 package com.example.manicura.ui.home
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.manicura.Notificacion
+import com.example.manicura.Utils
+import com.example.manicura.database.ManicuraDAO
+import kotlinx.coroutines.*
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val dataSource: ManicuraDAO, application: Application) :
+    AndroidViewModel(application) {
 
-    private var _MontoTotal = MutableLiveData<String>()
+    private var viewModelJob = Job()
 
-    val MontoTotal: LiveData<String> = _MontoTotal
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private var _GananciasBrutas = MutableLiveData<String>()
-    val GananciasBrutas: LiveData<String> = _MontoTotal
 
-    private var _GananciasLiquidas = MutableLiveData<String>()
-    val GananciasLiquidas: LiveData<String> = _MontoTotal
+    var MontoTotal = MutableLiveData<String>()
+
+    var GananciasBrutas = MutableLiveData<String>()
+
+    var GananciasLiquidas = MutableLiveData<String>()
+
+    private var _calculo = MutableLiveData<Double>()
+    val calculo: LiveData<Double> get() = _calculo
+
+    private var _Notificaciones = MutableLiveData<List<Notificacion>>()
+    val Notificaciones: LiveData<List<Notificacion>> get() = _Notificaciones
+
+    private var _Ganancias = MutableLiveData<Double>()
+    val Ganancias: LiveData<Double> get() = _Ganancias
 
     init {
-        _MontoTotal.value = "$0.000.000,00"
-        _GananciasBrutas.value = "$0.000.000,00"
-        _GananciasLiquidas.value = "$0.000.000,00"
+        MontoTotal.value = "$0.000"
+        _Ganancias.value = 0.0
+        _calculo.value = 0.0
+        GananciasBrutas.value = "$0.000.000,00"
+//        GananciasLiquidas.value = "$0.000.000,00"
     }
 
-    fun llenarNotificaciones() : ArrayList<Notificacion> {
-        val lista = ArrayList<Notificacion>()
 
-        lista.add(
-            Notificacion(
-                "Amapola Hernandez",
-                "Ultimo Servicio hace 21 dias",
-                true,
-                false
-            )
-        )
-        lista.add(
-            Notificacion(
-                "Andrés Cermeño",
-                "Ultimo Servicio hace 21 dias",
-                true,
-                true
-            )
-        )
-        lista.add(
-            Notificacion(
-                "Zoe Cermeño",
-                "Ultimo Servicio hace 21 dias",
-                true,
-                true
-            )
-        )
-        lista.add(
-            Notificacion(
-                "Mia Cermeño",
-                "Ultimo Servicio hace 21 dias",
-                true,
-                true
-            )
-        )
-        lista.add(
-            Notificacion(
-                "Andrés Cermeño",
-                "Ultimo Servicio hace 21 dias",
-                true,
-                true
-            )
-        )
-        lista.add(
-            Notificacion(
-                "Andrés Cermeño",
-                "Ultimo Servicio hace 21 dias",
-                true,
-                true
-            )
-        )
-        lista.add(
-            Notificacion(
-                "Andrés Cermeño",
-                "Ultimo Servicio hace 21 dias",
-                true,
-                true
-            )
-        )
-        lista.add(
-            Notificacion(
-                "Andrés Cermeño",
-                "Ultimo Servicio hace 21 dias",
-                true,
-                true
-            )
-        )
-        lista.add(
-            Notificacion(
-                "Andrés Cermeño",
-                "Ultimo Servicio hace 21 dias",
-                true,
-                true
-            )
-        )
-        lista.add(
-            Notificacion(
-                "Andrés Cermeño",
-                "Ultimo Servicio hace 21 dias",
-                true,
-                true
-            )
-        )
-        return lista
+    fun llenarNotificaciones(horaActual: Long, inicio: Int, fin: Int) {
+        uiScope.launch {
+            _Notificaciones.value = withContext(Dispatchers.IO) {
+                dataSource.getNotificaciones(
+                    Utils.calcularDiasAtras(horaActual, inicio),
+                    Utils.calcularDiasAtras(horaActual, fin)
+                )
+            }
+        }
     }
+
+    fun colocarGanancias(porcentaje: Long) {
+        var horaActual = System.currentTimeMillis()
+        var inicioMes = Utils.calcularPrimerDiaMes()
+        var inicioDia = Utils.calcularInicioDia(horaActual)
+
+        consultaDiaria(inicioDia, horaActual)
+
+        consultaMensual(inicioMes, horaActual)
+
+    }
+
+    fun consultaDiaria(inicioDia: Long, horaActual: Long) {
+        uiScope.launch {
+            _calculo.value = withContext(Dispatchers.IO) {
+                dataSource.getGanancias(inicioDia, horaActual)
+            }
+        }
+    }
+
+    fun consultaMensual(inicioMes: Long, horaActual: Long) {
+        uiScope.launch {
+            _Ganancias.value = withContext(Dispatchers.IO) {
+                dataSource.getGanancias(inicioMes, horaActual)
+            }
+        }
+    }
+
 
 }

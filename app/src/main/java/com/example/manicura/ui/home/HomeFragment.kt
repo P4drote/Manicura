@@ -1,22 +1,23 @@
 package com.example.manicura.ui.home
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.manicura.AdaptadorPrincipal
 import com.example.manicura.R
 import com.example.manicura.database.ManicuraDataBase
 import com.example.manicura.databinding.FragmentHomeBinding
-import com.example.manicura.ui.agregarCliente.AgregarClienteViewModel
-import com.example.manicura.ui.agregarCliente.AgregarClienteViewModelFactory
+import java.text.DecimalFormat
+import java.util.*
 
 private lateinit var recyclerView: RecyclerView
 private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -25,16 +26,18 @@ private lateinit var viewManager: RecyclerView.LayoutManager
 class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
-
+    private lateinit var prefs: SharedPreferences
     private lateinit var binding : FragmentHomeBinding
+    private var inicioNotificacion: String = "INICIO_N"
+    private var finNotificacion: String = "FIN_N"
+    private var porcentaje: String = "PORCENTAJE"
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        viewModel =
-                ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        //viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         binding = DataBindingUtil.inflate<FragmentHomeBinding>(
             inflater,
             R.layout.fragment_home,
@@ -46,33 +49,49 @@ class HomeFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val dataSource = ManicuraDataBase.getInstance(application).manicuraDAO
-        val viewModelFactory = AgregarClienteViewModelFactory(dataSource, application)
-        val AgregarClienteViewModel = ViewModelProviders.of(
-            this, viewModelFactory
-        ).get(AgregarClienteViewModel::class.java)
-
-        binding.homeViewModel = HomeViewModel()
+        val viewModelFactory = HomeViewModelFactory(dataSource, application)
+        viewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
 
         binding.homeViewModel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.MontoTotal.observe(viewLifecycleOwner, Observer {
+//        viewModel.MontoTotal.observe(viewLifecycleOwner, Observer {
+//
+//        })
+
+        viewManager = LinearLayoutManager(this.context)
+        prefs = PreferenceManager.getDefaultSharedPreferences(binding.root.context)
+        var inicio = prefs.getString(inicioNotificacion, "21")!!.toInt()
+        var fin = prefs.getString(finNotificacion, "35")!!.toInt()
+        var horaActual = System.currentTimeMillis()
+        var porcentaje = prefs.getString(porcentaje, "35")!!.toLong()
+        viewModel.llenarNotificaciones(horaActual, inicio, fin)
+
+        viewModel.Notificaciones.observe(viewLifecycleOwner, Observer {
+            viewAdapter = AdaptadorHome(it, this.requireContext())
+            recyclerView = binding.recyclerView.apply {
+
+                layoutManager = viewManager
+
+                adapter = viewAdapter
+            }
+        })
+
+        val dec = DecimalFormat.getCurrencyInstance(Locale.CANADA)
+
+        viewModel.colocarGanancias(porcentaje)
+
+        viewModel.Ganancias.observe(viewLifecycleOwner, Observer { total ->
+            var intermedio = total * porcentaje / 100.0
+            viewModel.MontoTotal.value = dec.format(intermedio)
 
         })
 
-        viewManager = LinearLayoutManager(this.context)
-        viewAdapter = AdaptadorPrincipal(
-            viewModel.llenarNotificaciones(),
-            this.requireContext()
-        )
-
-
-        recyclerView = binding.recyclerView.apply {
-
-            layoutManager = viewManager
-
-            adapter = viewAdapter
-        }
+        viewModel.calculo.observe(viewLifecycleOwner, Observer {
+            viewModel.GananciasBrutas.value = dec.format(viewModel.calculo.value)
+            viewModel.GananciasLiquidas.value =
+                dec.format((viewModel.calculo.value?.times(porcentaje) ?: 0.0) / 100.0)
+        })
 
         binding.ibAjustes.setOnClickListener { view: View ->
             Navigation.findNavController(view)
@@ -83,6 +102,8 @@ class HomeFragment : Fragment() {
             Navigation.findNavController(view)
                 .navigate(R.id.action_navigation_home_to_fragmentNuevoServicio)
         }
+
+
 
         return binding.root
 

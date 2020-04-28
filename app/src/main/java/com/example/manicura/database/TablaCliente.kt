@@ -14,8 +14,11 @@ data class TablaCliente(
     var nombre: String = "",
 
     @ColumnInfo(name = "fecha_ultima_visita")
-    var fechaUltimaVisita: Long = System.currentTimeMillis()
-)
+    var fechaUltimaVisita: Long = 0L,
 
-//Para restar 30 dias
-//new Date(System.currentTimeMillis() - 30 * 24 * 60 * 60 * 1000)
+    @ColumnInfo(name = "manos")
+    var manos: Boolean = true,
+
+    @ColumnInfo(name = "pies")
+    var pies: Boolean = false
+)

@@ -1,8 +1,10 @@
 package com.example.manicura
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -23,10 +25,22 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
+            R.id.navigation_home, R.id.navigation_clientes, R.id.navigation_notifications
+        )
+        )
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        //Ocultar el navController cuando no son los fragment principales
+        navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
+            if (nd.id == R.id.navigation_home || nd.id == R.id.navigation_clientes || nd.id == R.id.navigation_notifications) {
+                navView.visibility = View.VISIBLE
+            } else {
+                navView.visibility = View.GONE
+            }
 
+        }
     }
+
+
 }

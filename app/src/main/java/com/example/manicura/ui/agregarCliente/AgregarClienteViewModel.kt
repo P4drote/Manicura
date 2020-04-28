@@ -1,43 +1,36 @@
 package com.example.manicura.ui.agregarCliente
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.manicura.database.ManicuraDAO
 import com.example.manicura.database.TablaCliente
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
+class AgregarClienteViewModel(val database: ManicuraDAO) : ViewModel() {
 
-class AgregarClienteViewModel(
-    val database: ManicuraDAO,
-    application: Application
-) : AndroidViewModel(application) {
+    private val _mensage = MutableLiveData<Boolean>()
+    val mensage: LiveData<Boolean> get() = _mensage
 
-    private var viewModelJob = Job()
-
-    //var nombreCLiente: String = ""
-    var campoRequerido: String = ""
-    var hicieronClick = MutableLiveData<Boolean?>()
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    private val _salida = MutableLiveData<Boolean>()
+    val salida: LiveData<Boolean> get() = _salida
 
     fun onInsertarCliente(nombreCliente: String) {
-
-        uiScope.launch {
-            val nuevoCliente = TablaCliente()
-            nuevoCliente.nombre = nombreCliente
-            database.insertCliente(nuevoCliente)
-            //hicieronClick.value = true
+        if (nombreCliente.isEmpty()) {
+            _mensage.value = true
+        } else {
+            viewModelScope.launch {
+                val nuevoCliente = TablaCliente()
+                nuevoCliente.nombre = nombreCliente
+                withContext(Dispatchers.IO) {
+                    database.insertCliente(nuevoCliente)
+                }
+                _salida.value = true
+            }
         }
-
     }
 
 }

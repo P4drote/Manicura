@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Manicura</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_clientes">Usuarios</string>
     <string name="title_notifications">Notifications</string>
     <string name="nombre_de_la_client">Nombre de la Client@</string>
     <string name="Titulo_Ganancias_mes">Ganancias del mes</string>

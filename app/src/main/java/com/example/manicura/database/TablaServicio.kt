@@ -3,10 +3,11 @@ package com.example.manicura.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "servicios_table", foreignKeys = arrayOf(
+    tableName = "servicios_table",
+    primaryKeys = arrayOf("clienteId", "fecha"),
+    foreignKeys = arrayOf(
         ForeignKey(
             entity = TablaCliente::class,
             parentColumns = arrayOf("clienteId"),
@@ -16,10 +17,9 @@ import androidx.room.PrimaryKey
 )
 data class TablaServicio(
     @ColumnInfo(name = "clienteId")
-    @PrimaryKey
-    var clienteId: Long,
-    var montoPagado: Long = 0L,
+    var clienteId: Long = 0L,
     val fecha: Long = System.currentTimeMillis(),
+    var montoPagado: Double = 0.0,
     var manos: Boolean = true,
     var pies: Boolean = false
 )

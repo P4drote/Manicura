@@ -3,8 +3,10 @@ package com.example.manicura
 import java.io.Serializable
 
 class Notificacion(
-    public val Nombre: String,
-    public val Mensaje: String,
-    public val manos:Boolean = true,
-    public val pies: Boolean = true) :
+    val nombre_cliente: String,
+    val fecha_ultima_visita: Long,
+    val manos: Boolean = true,
+    val pies: Boolean = true
+) :
     Serializable
+

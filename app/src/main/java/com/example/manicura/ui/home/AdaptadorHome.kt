@@ -1,4 +1,4 @@
-package com.example.manicura
+package com.example.manicura.ui.home
 
 import android.content.Context
 
@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.example.manicura.Notificacion
+import com.example.manicura.R
+import com.example.manicura.Utils
 import kotlinx.android.synthetic.main.lista_notificaciones.view.*
 
 private val ManoVerde : Int = R.mipmap.mano_verde
@@ -15,15 +18,13 @@ private val ManoGris : Int = R.mipmap.mano_gris
 private val PieVerde: Int = R.mipmap.pie_verde
 private val PieGris: Int = R.mipmap.pie_gris
 
-class AdaptadorPrincipal(private var lista: List<Notificacion>, private var contexto: Context) : RecyclerView.Adapter<AdaptadorPrincipal.ViewHolder>() {
+class AdaptadorHome(private var lista: List<Notificacion>, private var contexto: Context) :
+    RecyclerView.Adapter<AdaptadorHome.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout = LayoutInflater.from(parent.context).inflate(R.layout.lista_notificaciones, parent, false)
 
-        return ViewHolder(
-            layout,
-            contexto
-        )
+        return ViewHolder(layout, contexto)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -38,8 +39,9 @@ class AdaptadorPrincipal(private var lista: List<Notificacion>, private var cont
         @RequiresApi(Build.VERSION_CODES.N)
         fun bind (notificacion: Notificacion){
 
-            vista.tvNombreCliente.text = notificacion.Nombre
-            vista.tvMensaje.text = notificacion.Mensaje
+            vista.tvNombreCliente.text = notificacion.nombre_cliente
+            vista.tvMensaje.text =
+                "Ultimo servicio hace " + Utils.calcularDiasTranscurridos(notificacion.fecha_ultima_visita) + " días"
             if (notificacion.manos){
                 vista.ivManos.setImageResource(ManoVerde)
             }else{
@@ -51,7 +53,7 @@ class AdaptadorPrincipal(private var lista: List<Notificacion>, private var cont
                 vista.ivPies.setImageResource(PieGris)
             }
 
-            vista.tvIcon.text = notificacion.Nombre.substring(0,1)
+            vista.tvIcon.text = notificacion.nombre_cliente.substring(0, 1)
 
 //            val mRandom = Random()
 //            val color: Int =

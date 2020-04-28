@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -124,38 +123,25 @@ class AjustesFragment : Fragment() {
                     binding.tvNombreTienda.text = editText.text.toString()
                     editor.putString(tienda, editText.text.toString())
                     editor.apply()
-                    Toast.makeText(
-                        binding.root.context,
-                        "Nombre de Tienda",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
                 }
                 2 -> {
                     binding.tvPorcentajeGanancia.text = editText.text.toString()
                     editor.putString(porcentaje, editText.text.toString())
                     editor.apply()
-                    Toast.makeText(
-                        binding.root.context,
-                        "Porcentaje de Ganancia",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
                 }
                 3 -> {
                     binding.tvInicioNotificacion.text = editText.text.toString()
                     editor.putString(inicioNotificacion, editText.text.toString())
                     editor.apply()
-                    Toast.makeText(
-                        binding.root.context,
-                        "Inicio de Notificación",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
                 }
                 4 -> {
                     binding.tvFinNotificacion.text = editText.text.toString()
                     editor.putString(finNotificacion, editText.text.toString())
                     editor.apply()
-                    Toast.makeText(binding.root.context, "Fin de Notificación", Toast.LENGTH_SHORT)
-                        .show()
+
                 }
             }
         }
