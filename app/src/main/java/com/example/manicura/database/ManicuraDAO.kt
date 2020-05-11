@@ -1,10 +1,7 @@
 package com.example.manicura.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.manicura.Notificacion
 import com.example.manicura.Servicios
 
@@ -20,6 +17,9 @@ interface ManicuraDAO {
     @Update
     fun updateCliente(cliente: TablaCliente)
 
+    @Delete
+    fun deleteCliente(tablaCliente: TablaCliente)
+
     @Query("SELECT nombre_cliente FROM cliente_table")
     fun getClientes(): LiveData<List<String>>
 
@@ -29,7 +29,7 @@ interface ManicuraDAO {
 //    @Query("SELECT COUNT(*) FROM servicios_table WHERE clienteId = (SELECT clienteId FROM cliente_table WHERE nombre_cliente = :nombre)")
 //    fun contarServicios(nombre : String): Int
 
-    @Query("SELECT clienteId FROM cliente_table WHERE nombre_cliente = :nombre ORDER BY clienteId DESC LIMIT 1")
+    @Query("SELECT clienteId FROM cliente_table WHERE nombre_cliente LIKE :nombre")
     fun getIdCliente(nombre: String): Long
 
 
@@ -41,4 +41,7 @@ interface ManicuraDAO {
 
     @Query("SELECT SUM(montoPagado) FROM servicios_table WHERE fecha BETWEEN :fechaActual AND :fechaInicioMes")
     fun getGanancias(fechaActual: Long, fechaInicioMes: Long): Double
+
+    @Query("SELECT * FROM cliente_table ORDER BY nombre_cliente ASC")
+    fun getTodosLosClientes(): LiveData<List<TablaCliente>>
 }

@@ -17,7 +17,7 @@ data class TablaCliente(
     var fechaUltimaVisita: Long = 0L,
 
     @ColumnInfo(name = "manos")
-    var manos: Boolean = true,
+    var manos: Boolean = false,
 
     @ColumnInfo(name = "pies")
     var pies: Boolean = false

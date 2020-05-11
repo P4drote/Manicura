@@ -34,14 +34,14 @@ object Utils {
     }
 
     fun calcularDiasAtras(horaActual: Long, dias: Int): Long {
-        val horaFinal = horaActual - (86400000 * dias.toLong())
+        val horaFinal = horaActual - (86400000 * (dias.toLong()))
         return horaFinal
     }
 
     fun calcularDiasTranscurridos(fecha: Long): Int {
         var fechaActual = System.currentTimeMillis()
-        fechaActual = fechaActual - fecha
-        return SimpleDateFormat("D").format(fechaActual).toInt()
+        var fechafinal = fechaActual - fecha
+        return (fechafinal / 86400000L).toInt()
     }
 
     fun calcularInicioDia(fecha: Long): Long {

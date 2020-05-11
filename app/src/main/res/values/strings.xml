@@ -46,5 +46,6 @@
     <string name="chip_Pies">Pies</string>
     <string name="hint_MontoACobrar">Monto a cobrar</string>
     <string name="titulo_UltimasVisitas">Ultimas Visitas:</string>
+    <string name="title_activity_borar">Borar</string>
     >
 </resources>

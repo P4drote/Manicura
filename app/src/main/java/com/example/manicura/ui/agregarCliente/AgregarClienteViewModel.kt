@@ -25,6 +25,7 @@ class AgregarClienteViewModel(val database: ManicuraDAO) : ViewModel() {
             viewModelScope.launch {
                 val nuevoCliente = TablaCliente()
                 nuevoCliente.nombre = nombreCliente
+                nuevoCliente.fechaUltimaVisita = 0L
                 withContext(Dispatchers.IO) {
                     database.insertCliente(nuevoCliente)
                 }

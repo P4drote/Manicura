@@ -11,6 +11,8 @@ import com.example.manicura.R
 import com.example.manicura.Servicios
 import com.example.manicura.Utils
 import kotlinx.android.synthetic.main.lista_servicios.view.*
+import java.text.DecimalFormat
+import java.util.*
 
 private val ManoVerde: Int = R.mipmap.mano_verde
 private val ManoGris: Int = R.mipmap.mano_gris
@@ -20,6 +22,7 @@ private val PieGris: Int = R.mipmap.pie_gris
 class AdaptadorNuevoServicio(
     private var listaDeServicios: List<Servicios>,
     private var contexto: Context
+
 ) : RecyclerView.Adapter<AdaptadorNuevoServicio.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -41,20 +44,10 @@ class AdaptadorNuevoServicio(
 
         @RequiresApi(Build.VERSION_CODES.N)
         fun bind(servicios: Servicios) {
-            //val mientras : Long = 86400000 * 2 //21 * 86400000‬
-//            //val prueba =  System.currentTimeMillis() - mientras
-//            val prueba =  System.currentTimeMillis()
-//            DateUtils.MONTH_FORMAT
-//            //vista.tv_Ultimavisita.text = prueba.toString()
-//            val prueba2=SimpleDateFormat("d").format(TimeUnit.DAYS.convert(prueba, TimeUnit.DAYS)).toString()
-//            val prueba21 = SimpleDateFormat("k").format(TimeUnit.DAYS.convert(prueba, TimeUnit.DAYS)).toString()
-//            val prueba22 = SimpleDateFormat("m").format(TimeUnit.DAYS.convert(prueba, TimeUnit.DAYS)).toString()
-//            val prueba3 = (prueba2.toInt()-1)  * 86400000 + (prueba21.toInt() * 3600000) + (prueba22.toInt() * 60000)
-//            val final = System.currentTimeMillis() - prueba3
-//            vista.tv_Ultimavisita.text = SimpleDateFormat("dd-MM-yyyyy HH:mm:ss.SSS").format(TimeUnit.DAYS.convert(final, TimeUnit.DAYS)).toString()
+            val dec = DecimalFormat.getCurrencyInstance(Locale.CANADA)
             vista.tv_Ultimavisita.text =
                 Utils.convertLongToDateString(servicios.fecha, "dd-MM-yyyy")
-            vista.tv_Monto.text = servicios.montoPagado.toString()
+            vista.tv_Monto.text = dec.format(servicios.montoPagado).toString()
             if (servicios.manos) {
                 vista.iv_Manos.setImageResource(ManoVerde)
             } else {

@@ -1,5 +1,6 @@
 package com.example.manicura.ui.home
 
+import android.animation.ValueAnimator
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.manicura.R
 import com.example.manicura.database.ManicuraDataBase
 import com.example.manicura.databinding.FragmentHomeBinding
+import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.DecimalFormat
 import java.util.*
 
@@ -23,19 +25,22 @@ private lateinit var recyclerView: RecyclerView
 private lateinit var viewAdapter: RecyclerView.Adapter<*>
 private lateinit var viewManager: RecyclerView.LayoutManager
 
+
 class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var prefs: SharedPreferences
-    private lateinit var binding : FragmentHomeBinding
+    private lateinit var binding: FragmentHomeBinding
     private var inicioNotificacion: String = "INICIO_N"
     private var finNotificacion: String = "FIN_N"
     private var porcentaje: String = "PORCENTAJE"
+    private var TemporalGanancias: String = "TEMPORALGANANCIAS"
+
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         //viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         binding = DataBindingUtil.inflate<FragmentHomeBinding>(
@@ -46,10 +51,11 @@ class HomeFragment : Fragment() {
         )
         //val root = inflater.inflate(R.layout.fragment_home, container, false)
 
-
+        prefs = PreferenceManager.getDefaultSharedPreferences(binding.root.context)
         val application = requireNotNull(this.activity).application
         val dataSource = ManicuraDataBase.getInstance(application).manicuraDAO
         val viewModelFactory = HomeViewModelFactory(dataSource, application)
+        val editor = prefs.edit()
         viewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
 
         binding.homeViewModel = viewModel
@@ -65,6 +71,8 @@ class HomeFragment : Fragment() {
         var fin = prefs.getString(finNotificacion, "35")!!.toInt()
         var horaActual = System.currentTimeMillis()
         var porcentaje = prefs.getString(porcentaje, "35")!!.toLong()
+        var temporalGanancias = prefs.getFloat(TemporalGanancias, 0.0F)
+
         viewModel.llenarNotificaciones(horaActual, inicio, fin)
 
         viewModel.Notificaciones.observe(viewLifecycleOwner, Observer {
@@ -82,15 +90,27 @@ class HomeFragment : Fragment() {
         viewModel.colocarGanancias(porcentaje)
 
         viewModel.Ganancias.observe(viewLifecycleOwner, Observer { total ->
-            var intermedio = total * porcentaje / 100.0
-            viewModel.MontoTotal.value = dec.format(intermedio)
+            var intermedio = total!! * porcentaje / 100.0
+            if (intermedio != temporalGanancias.toDouble()) {
+                val animator =
+                    ValueAnimator.ofFloat(viewModel.MontoTotal.value!!, intermedio.toFloat())
+                viewModel.MontoTotal.value = intermedio.toFloat()
+                animator.duration = 2000
+                animator.addUpdateListener { animation ->
+                    tv_MontoTotal.text = dec.format(animation.animatedValue).toString()
+                }
+                animator.start()
+                editor.putFloat(TemporalGanancias, intermedio.toFloat())
+                editor.apply()
+            }
+            tv_MontoTotal.text = dec.format(intermedio).toString()
 
         })
 
         viewModel.calculo.observe(viewLifecycleOwner, Observer {
-            viewModel.GananciasBrutas.value = dec.format(viewModel.calculo.value)
-            viewModel.GananciasLiquidas.value =
-                dec.format((viewModel.calculo.value?.times(porcentaje) ?: 0.0) / 100.0)
+//            viewModel.GananciasBrutas.value = dec.format(it).toString()!!
+//            viewModel.GananciasLiquidas.value =
+//                dec.format((it?.times(porcentaje) ?: 0.0) / 100.0).toString()!!
         })
 
         binding.ibAjustes.setOnClickListener { view: View ->
@@ -99,14 +119,12 @@ class HomeFragment : Fragment() {
         }
 
         binding.fabAgregarServicio.setOnClickListener { view: View ->
+            //FragmentNuevoServicio.startActivity(requireContext(), transformationLayout_fab)
             Navigation.findNavController(view)
                 .navigate(R.id.action_navigation_home_to_fragmentNuevoServicio)
         }
 
-
-
         return binding.root
-
 
     }
 }

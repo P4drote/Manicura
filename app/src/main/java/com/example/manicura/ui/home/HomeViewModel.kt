@@ -17,7 +17,7 @@ class HomeViewModel(private val dataSource: ManicuraDAO, application: Applicatio
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
 
-    var MontoTotal = MutableLiveData<String>()
+    var MontoTotal = MutableLiveData<Float>()
 
     var GananciasBrutas = MutableLiveData<String>()
 
@@ -33,11 +33,9 @@ class HomeViewModel(private val dataSource: ManicuraDAO, application: Applicatio
     val Ganancias: LiveData<Double> get() = _Ganancias
 
     init {
-        MontoTotal.value = "$0.000"
-        _Ganancias.value = 0.0
+        MontoTotal.value = 0.0F
+//        _Ganancias.value = 0.0
         _calculo.value = 0.0
-        GananciasBrutas.value = "$0.000.000,00"
-//        GananciasLiquidas.value = "$0.000.000,00"
     }
 
 

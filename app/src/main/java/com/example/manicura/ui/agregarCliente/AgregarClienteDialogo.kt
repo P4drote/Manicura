@@ -1,5 +1,7 @@
 package com.example.manicura.ui.agregarCliente
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +14,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.manicura.R
 import com.example.manicura.database.ManicuraDataBase
 import com.example.manicura.databinding.DialogAgregarClienteBinding
+import com.skydoves.transformationlayout.TransformationCompat
+import com.skydoves.transformationlayout.TransformationLayout
 import kotlinx.android.synthetic.main.dialog_agregar_cliente.*
 
+private lateinit var binding: DialogAgregarClienteBinding
 
 class AgregarClienteDialogo : DialogFragment() {
 
@@ -23,9 +28,9 @@ class AgregarClienteDialogo : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: DialogAgregarClienteBinding =
-            DataBindingUtil.inflate(inflater, R.layout.dialog_agregar_cliente, container, false)
 
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.dialog_agregar_cliente, container, false)
         val application = requireNotNull(this.activity).application
         val dataSource = ManicuraDataBase.getInstance(application).manicuraDAO
         val viewModelFactory = AgregarClienteViewModelFactory(dataSource)
@@ -45,27 +50,12 @@ class AgregarClienteDialogo : DialogFragment() {
             dismiss()
         })
 
-//        binding.buttonRegistrarCliente.setOnClickListener {
-//            var nombre = binding.etNuevoCliente.text.toString()
-//
-//            if (nombre.isEmpty()) {
-//                imput_layout_name.error = "Campo requerido"
-//                return@setOnClickListener
-//            } else {
-//                lifecycleScope.launch {
-//                    withContext(Dispatchers.IO) {AgregarClienteViewModel.onInsertarCliente(nombre)}
-//                    toast()
-//                }
-//                this.dismiss()
-//            }
-//        }
-
         return binding.root
 
     }
 
     private fun toast() {
-        Toast.makeText(this.context, "El cliente se ha agregado", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this.activity, "El cliente se ha agregado", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,6 +65,14 @@ class AgregarClienteDialogo : DialogFragment() {
 
     }
 
-
+    companion object {
+        fun startActivity(
+            context: Context,
+            transformationLayout: TransformationLayout
+        ) {
+            val intent = Intent(context, AgregarClienteDialogo::class.java)
+            TransformationCompat.startActivity(transformationLayout, intent)
+        }
+    }
 }
 

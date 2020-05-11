@@ -18,7 +18,7 @@ import androidx.room.ForeignKey
 data class TablaServicio(
     @ColumnInfo(name = "clienteId")
     var clienteId: Long = 0L,
-    val fecha: Long = System.currentTimeMillis(),
+    var fecha: Long = 0L,
     var montoPagado: Double = 0.0,
     var manos: Boolean = true,
     var pies: Boolean = false
