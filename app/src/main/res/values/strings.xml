@@ -47,5 +47,10 @@
     <string name="hint_MontoACobrar">Monto a cobrar</string>
     <string name="titulo_UltimasVisitas">Ultimas Visitas:</string>
     <string name="title_activity_borar">Borar</string>
+    <string name="editor_de_cliente">Editor de Cliente</string>
+    <string name="nombre_de_cliente">Nombre de Cliente</string>
+    <string name="todo">TODO</string>
+    <string name="ultimo_servicio">Ultimo Servicio</string>
+    <string name="actualizar">Actualizar</string>
     >
 </resources>

@@ -49,7 +49,7 @@
             android:id="@+id/ivManos"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignParentEnd="true"
+            android:layout_toLeftOf="@id/iv_Edit"
             android:contentDescription="TODO"
             android:padding="5dp"
             app:srcCompat="@mipmap/mano_gris" />
@@ -59,8 +59,8 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_below="@id/ivManos"
-            android:layout_alignParentEnd="true"
             android:contentDescription="TODO"
+            android:layout_toLeftOf="@id/iv_Edit"
             android:padding="5dp"
             app:srcCompat="@mipmap/pie_gris" />
 
@@ -69,6 +69,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/iv_Edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:tint="@color/colorPrimaryDark"
+            app:srcCompat="@drawable/ic_edit_white_24dp" />
 
 
     </RelativeLayout>

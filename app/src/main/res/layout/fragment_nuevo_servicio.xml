@@ -86,6 +86,7 @@
                 style="@style/Widget.MaterialComponents.AutoCompleteTextView.FilledBox"
                 android:layout_height="wrap_content"
             android:fontFamily="@font/alegreya_sans_sc"
+                android:singleLine="true"
                 android:layout_width="match_parent"
             android:hint="@string/hint_NombredeCliente" />
 
@@ -138,6 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/alegreya_sans_sc"
+                android:singleLine="true"
                 android:hint="Monto a Cobrar"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>

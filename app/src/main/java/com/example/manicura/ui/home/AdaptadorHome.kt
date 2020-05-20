@@ -12,6 +12,7 @@ import com.example.manicura.Notificacion
 import com.example.manicura.R
 import com.example.manicura.Utils
 import kotlinx.android.synthetic.main.lista_notificaciones.view.*
+import kotlin.time.ExperimentalTime
 
 private val ManoVerde : Int = R.mipmap.mano_verde
 private val ManoGris : Int = R.mipmap.mano_gris
@@ -27,6 +28,7 @@ class AdaptadorHome(private var lista: List<Notificacion>, private var contexto:
         return ViewHolder(layout, contexto)
     }
 
+    @ExperimentalTime
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(lista[position])
@@ -36,6 +38,7 @@ class AdaptadorHome(private var lista: List<Notificacion>, private var contexto:
 
     class ViewHolder(var vista: View, var contexto: Context): RecyclerView.ViewHolder(vista){
 
+        @ExperimentalTime
         @RequiresApi(Build.VERSION_CODES.N)
         fun bind (notificacion: Notificacion){
 
@@ -59,8 +62,6 @@ class AdaptadorHome(private var lista: List<Notificacion>, private var contexto:
 //            val color: Int =
 //                Color.argb(255, mRandom.nextInt(256), mRandom.nextInt(256), mRandom.nextInt(256))
 //            (vista.tvIcon.getBackground() as GradientDrawable).setColor(color)
-
-
 
 
         }

@@ -1,6 +1,7 @@
 package com.example.manicura.ui.nuevoServicio
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,22 +63,27 @@ class FragmentNuevoServicio : Fragment() {
                 viewModel.onAgregarServicio(nombreCliente, montoPagado)
             }
             //Utils.hideSoftKeyBoard(binding.root.context, this.nav_view)
-            //View?.let { it1 -> Utils.hideSoftKeyBoard(binding.root.context, it1) }
-            Toast.makeText(
-                binding.root.context,
+            binding.root.rootView?.let { it1 -> Utils.hideSoftKeyBoard(binding.root.context, it1) }
+            FancyToast.makeText(
+                this.requireContext(),
                 "Servicio agregado!",
-                Toast.LENGTH_LONG
+                FancyToast.LENGTH_LONG,
+                FancyToast.SUCCESS,
+                false
             ).show()
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_fragmentNuevoServicio_to_navigation_home)
         }
 
 
+        //Función de dialogo animado para preguntar al usuario si va a agregar un nuevo cliente a la base de datos
         fun dialogoAnimado(Nombre: String) {
             // Animated BottomSheet Material Dialog
             val dialogo = BottomSheetDialog(this.requireContext(), R.style.BottonSheetDialogTheme)
-            val view = this.layoutInflater.inflate(R.layout.layout_botton_sheet, null)
-            val close = view.findViewById<Button>(R.id.btn_cancel)
-            val agregar = view.findViewById<Button>(R.id.btn_agregarCliente)
-            val mensaje = view.findViewById<TextView>(R.id.tvMensaje)
+            val viewBottonLayout = this.layoutInflater.inflate(R.layout.layout_botton_sheet, null)
+            val close = viewBottonLayout.findViewById<Button>(R.id.btn_cancel)
+            val agregar = viewBottonLayout.findViewById<Button>(R.id.btn_agregarCliente)
+            val mensaje = viewBottonLayout.findViewById<TextView>(R.id.tvMensaje)
             mensaje.text = Nombre + " no existe en la base de datos. Deseas Agregarl@? "
             close.setOnClickListener {
                 dialogo.dismissWithAnimation = true
@@ -88,10 +94,8 @@ class FragmentNuevoServicio : Fragment() {
                 dialogo.dismissWithAnimation = true
                 dialogo.dismiss()
                 agregarServicio()
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_fragmentNuevoServicio_to_navigation_home)
             }
-            dialogo.setContentView(view)
+            dialogo.setContentView(viewBottonLayout)
             dialogo.setCancelable(false)
             dialogo.show()
         }

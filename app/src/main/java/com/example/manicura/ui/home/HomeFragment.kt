@@ -35,6 +35,8 @@ class HomeFragment : Fragment() {
     private var finNotificacion: String = "FIN_N"
     private var porcentaje: String = "PORCENTAJE"
     private var TemporalGanancias: String = "TEMPORALGANANCIAS"
+    private var TemporalBrutas: String = "TEMPORALBRUTAS"
+    private var TemporalLiquidas: String = "TEMPORALLIQUIDAS"
 
 
     override fun onCreateView(
@@ -72,6 +74,8 @@ class HomeFragment : Fragment() {
         var horaActual = System.currentTimeMillis()
         var porcentaje = prefs.getString(porcentaje, "35")!!.toLong()
         var temporalGanancias = prefs.getFloat(TemporalGanancias, 0.0F)
+        var temporalBrutas = prefs.getFloat(TemporalBrutas, 0.0F)
+        var temporalLiquidas = prefs.getFloat(TemporalLiquidas, 0.0F)
 
         viewModel.llenarNotificaciones(horaActual, inicio, fin)
 
@@ -80,12 +84,12 @@ class HomeFragment : Fragment() {
             recyclerView = binding.recyclerView.apply {
 
                 layoutManager = viewManager
-
+                0
                 adapter = viewAdapter
             }
         })
 
-        val dec = DecimalFormat.getCurrencyInstance(Locale.CANADA)
+        val dec = DecimalFormat.getCurrencyInstance(Locale.getDefault())
 
         viewModel.colocarGanancias(porcentaje)
 
@@ -93,24 +97,47 @@ class HomeFragment : Fragment() {
             var intermedio = total!! * porcentaje / 100.0
             if (intermedio != temporalGanancias.toDouble()) {
                 val animator =
-                    ValueAnimator.ofFloat(viewModel.MontoTotal.value!!, intermedio.toFloat())
-                viewModel.MontoTotal.value = intermedio.toFloat()
+                    ValueAnimator.ofFloat(temporalGanancias, intermedio.toFloat())
+                //viewModel.MontoTotal.value = intermedio.toFloat()
                 animator.duration = 2000
                 animator.addUpdateListener { animation ->
-                    tv_MontoTotal.text = dec.format(animation.animatedValue).toString()
+                    tv_MontoTotal.text = dec.format(animation.animatedValue).toString()!!
                 }
                 animator.start()
                 editor.putFloat(TemporalGanancias, intermedio.toFloat())
                 editor.apply()
             }
             tv_MontoTotal.text = dec.format(intermedio).toString()
-
         })
 
-        viewModel.calculo.observe(viewLifecycleOwner, Observer {
-//            viewModel.GananciasBrutas.value = dec.format(it).toString()!!
-//            viewModel.GananciasLiquidas.value =
-//                dec.format((it?.times(porcentaje) ?: 0.0) / 100.0).toString()!!
+        viewModel.calculo.observe(viewLifecycleOwner, Observer { cantidad ->
+            if (cantidad != temporalBrutas.toDouble()) {
+                val animator = ValueAnimator.ofFloat(temporalBrutas, cantidad.toFloat())
+                animator.duration = 2000
+                animator.addUpdateListener { animation ->
+                    viewModel.GananciasBrutas.value =
+                        dec.format(animation.animatedValue).toString()!!
+                }
+                animator.start()
+
+                //var cifraInicial = viewModel.GananciasLiquidas.value?.toDouble() ?: 0.0
+                var calculo = (cantidad?.times(porcentaje) ?: 0.0) / 100.0
+                val animator2 = ValueAnimator.ofFloat(temporalLiquidas.toFloat(), calculo.toFloat())
+                animator2.duration = 2000
+                animator2.addUpdateListener { animation2 ->
+                    viewModel.GananciasLiquidas.value =
+                        dec.format(animation2.animatedValue).toString()
+                }
+                animator2.start()
+                //viewModel.GananciasBrutas.value = dec.format(it).toString()!!
+                //viewModel.GananciasLiquidas.value = dec.format((cantidad?.times(porcentaje) ?: 0.0) / 100.0).toString()!!
+                editor.putFloat(TemporalBrutas, cantidad.toFloat())
+                editor.putFloat(TemporalLiquidas, calculo.toFloat())
+                editor.apply()
+            } else {
+                viewModel.GananciasBrutas.value = dec.format(temporalBrutas).toString()
+                viewModel.GananciasLiquidas.value = dec.format(temporalLiquidas).toString()
+            }
         })
 
         binding.ibAjustes.setOnClickListener { view: View ->

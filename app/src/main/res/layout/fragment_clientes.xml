@@ -17,12 +17,16 @@
         tools:context=".ui.clientes.ClientesFragment">
 
         <TextView
-            android:id="@+id/tv_Titulo"
+            android:id="@+id/tv_TituloFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:shadowColor="#000000"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
             android:fontFamily="@font/alegreya_sans_sc"
             android:text="Administración de Clientes"
             android:textAlignment="center"
@@ -33,79 +37,53 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/et_NombreCliente"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="@string/hint_NombredeCliente"
-        android:inputType="textPersonName"
-        android:textColor="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_Titulo" />
 
-    <Button
-        android:id="@+id/btn_Agregar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/ic_add_white_24dp"
-        android:text="Agregar"
-        app:cornerRadius="16dp"
-        app:elevation="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_Editar"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_NombreCliente" />
+        <EditText
+            android:id="@+id/et_BusquedaCliente"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/busqueda_cliente"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="8dp"
+            android:ems="10"
+            android:hint="Busqueda"
+            android:inputType="textPersonName"
+            android:singleLine="true"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_TituloFragment" />
 
-    <Button
-        android:id="@+id/btn_Editar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/ic_edit_white_24dp"
-        android:text="@string/editar"
-        app:cornerRadius="16dp"
-        app:elevation="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_Borrar"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_Agregar"
-        app:layout_constraintTop_toBottomOf="@+id/et_NombreCliente" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_BusquedaCliente"
+            tools:listitem="@layout/lista_clientes" />
 
-    <Button
-        android:id="@+id/btn_Borrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:drawableLeft="@drawable/ic_delete_white_24dp"
-        android:text="Borrar  "
-        app:cornerRadius="16dp"
-        app:elevation="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_Editar"
-        app:layout_constraintTop_toBottomOf="@+id/et_NombreCliente" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Editar"
-        tools:listitem="@layout/lista_clientes" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_AgregarCliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_addperson"
+            app:tint="@color/colorBotones" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

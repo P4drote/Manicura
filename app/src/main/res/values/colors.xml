@@ -6,4 +6,5 @@
     <color name="colorDesabilitado">#E5E5E5</color>
     <color name="white">#FFF</color>
     <color name="black">#000</color>
+    <color name="colorBotones">#432b2b</color>
 </resources>

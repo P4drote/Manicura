@@ -32,7 +32,6 @@ interface ManicuraDAO {
     @Query("SELECT clienteId FROM cliente_table WHERE nombre_cliente LIKE :nombre")
     fun getIdCliente(nombre: String): Long
 
-
     @Query("SELECT nombre_cliente, fecha_ultima_visita, manos, pies FROM  cliente_table WHERE  fecha_ultima_visita BETWEEN :finNotificacion AND :inicioNotificacion  ORDER BY fecha_ultima_visita DESC")
     fun getNotificaciones(inicioNotificacion: Long, finNotificacion: Long): List<Notificacion>
 
@@ -44,4 +43,7 @@ interface ManicuraDAO {
 
     @Query("SELECT * FROM cliente_table ORDER BY nombre_cliente ASC")
     fun getTodosLosClientes(): LiveData<List<TablaCliente>>
+
+    @Query("SELECT * FROM cliente_table WHERE clienteId = :ClienteId")
+    fun getCliente(ClienteId: Long): TablaCliente
 }

@@ -35,7 +35,6 @@ class HomeViewModel(private val dataSource: ManicuraDAO, application: Applicatio
     init {
         MontoTotal.value = 0.0F
 //        _Ganancias.value = 0.0
-        _calculo.value = 0.0
     }
 
 
@@ -51,9 +50,9 @@ class HomeViewModel(private val dataSource: ManicuraDAO, application: Applicatio
     }
 
     fun colocarGanancias(porcentaje: Long) {
-        var horaActual = System.currentTimeMillis()
-        var inicioMes = Utils.calcularPrimerDiaMes()
-        var inicioDia = Utils.calcularInicioDia(horaActual)
+        val horaActual = System.currentTimeMillis()
+        val inicioMes = Utils.calcularPrimerDiaMes(horaActual)
+        val inicioDia = Utils.calcularInicioDia(horaActual)
 
         consultaDiaria(inicioDia, horaActual)
 

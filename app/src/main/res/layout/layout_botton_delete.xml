@@ -16,7 +16,7 @@
         android:layout_height="100dp"
         android:scaleType="centerInside"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="agregarUsuario.json"
+        app:lottie_fileName="borrarUsuario.json"
         app:lottie_loop="true" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="15dp"
-        android:text="Agregar Cliente?"
+        android:text="Borrar Cliente?"
         android:textColor="@color/black"
         android:textSize="18dp"
         android:textStyle="bold" />
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="15dp"
-        android:text="Desea agregar al usuario a la base de datos?"
+        android:text="Desea borrar al cliente de la base de datos?"
         android:textColor="@color/black"
         android:textSize="16dp" />
 
@@ -65,9 +65,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:text="Agregar"
+            android:text="Borrar"
             app:cornerRadius="5dp"
-            app:icon="@drawable/ic_addperson" />
+            app:icon="@drawable/ic_delete_white_24dp" />
 
     </LinearLayout>
 

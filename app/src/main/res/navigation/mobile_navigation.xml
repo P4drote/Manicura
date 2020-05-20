@@ -22,7 +22,11 @@
         android:id="@+id/navigation_clientes"
         android:name="com.example.manicura.ui.clientes.ClientesFragment"
         android:label="@string/title_clientes"
-        tools:layout="@layout/fragment_clientes" />
+        tools:layout="@layout/fragment_clientes">
+        <action
+            android:id="@+id/action_navigation_clientes_to_fragmentEditarCliente"
+            app:destination="@id/fragmentEditarCliente" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -45,5 +49,14 @@
         <action
             android:id="@+id/action_fragmentNuevoServicio_to_navigation_home"
             app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentEditarCliente"
+        android:name="com.example.manicura.ui.editarCliente.FragmentEditarCliente"
+        android:label="fragment_editar_cliente"
+        tools:layout="@layout/fragment_editar_cliente">
+        <action
+            android:id="@+id/action_fragmentEditarCliente_to_navigation_clientes"
+            app:destination="@id/navigation_clientes" />
     </fragment>
 </navigation>

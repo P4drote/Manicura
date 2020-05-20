@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="homeViewModel"
             type="com.example.manicura.ui.home.HomeViewModel" />
@@ -82,7 +83,7 @@
                             app:srcCompat="@mipmap/amapolanails" />
 
                         <TextView
-                            android:id="@+id/tv_Titulo"
+                            android:id="@+id/tv_TituloFragment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="8dp"
@@ -248,33 +249,23 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             tools:listitem="@layout/lista_notificaciones" />
 
-        <com.skydoves.transformationlayout.TransformationLayout
-            android:id="@+id/transformationLayout_fab"
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_AgregarServicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:forceDarkAllowed="false"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:hoveredFocusedTranslationZ="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:transformation_duration="550"
-            app:transformation_fadeMode="through">
+            app:maxImageSize="24dp"
+            app:srcCompat="@mipmap/nailspaint"
+            app:tint="#FFFFFFFF" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_AgregarServicio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:clickable="true"
-                android:forceDarkAllowed="false"
-                app:backgroundTint="@color/colorPrimaryDark"
-                app:hoveredFocusedTranslationZ="6dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:maxImageSize="24dp"
-                app:srcCompat="@drawable/ic_add_white_24dp"
-                app:tint="#FFFFFFFF" />
-        </com.skydoves.transformationlayout.TransformationLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
