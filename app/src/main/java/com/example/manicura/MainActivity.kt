@@ -2,7 +2,6 @@ package com.example.manicura
 
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavDestination
@@ -20,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         Thread.sleep(2000)
-        setTheme(R.style.AppTheme_NoActionBar)
+        setTheme(R.style.AppTheme)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val navView: BottomNavigationView = binding.navView
 

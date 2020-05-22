@@ -2,10 +2,13 @@ package com.example.manicura.ui.agregarCliente
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
@@ -37,12 +40,17 @@ class AgregarClienteDialogo : DialogFragment() {
         val agregarClienteViewModel =
             ViewModelProvider(this, viewModelFactory)[AgregarClienteViewModel::class.java]
 
+
         binding.agregarClienteViewModel = agregarClienteViewModel
 
         binding.lifecycleOwner = this
 
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         agregarClienteViewModel.mensage.observe(viewLifecycleOwner, Observer { message ->
             imput_layout_name.error = "Campo requerido"
+            var animShake = AnimationUtils.loadAnimation(binding.root.context, R.anim.vibrar)
+            imput_layout_name.startAnimation(animShake)
         })
 
         agregarClienteViewModel.salida.observe(viewLifecycleOwner, Observer { salida ->

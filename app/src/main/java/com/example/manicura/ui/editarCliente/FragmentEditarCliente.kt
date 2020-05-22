@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -76,9 +75,8 @@ class FragmentEditarCliente : Fragment() {
                 FancyToast.SUCCESS,
                 false
             ).show()
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.action_fragmentEditarCliente_to_navigation_clientes)
             Utils.hideSoftKeyBoard(binding.root.context, binding.root)
+            activity?.onBackPressed()
         }
 
         editarClienteViewModel.clienteActualizado.observe(viewLifecycleOwner, Observer {
@@ -140,7 +138,7 @@ class FragmentEditarCliente : Fragment() {
         }
 
         binding.ibAtras.setOnClickListener { view: View ->
-            Navigation.findNavController(view)
+            Navigation.findNavController(binding.root)
                 .navigate(R.id.action_fragmentEditarCliente_to_navigation_clientes)
             Utils.hideSoftKeyBoard(binding.root.context, view)
         }

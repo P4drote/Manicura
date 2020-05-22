@@ -26,7 +26,7 @@
             android:shadowColor="#000000"
             android:shadowDx="0"
             android:shadowDy="0"
-            android:shadowRadius="5"
+            android:shadowRadius="2"
             android:fontFamily="@font/alegreya_sans_sc"
             android:text="Administración de Clientes"
             android:textAlignment="center"

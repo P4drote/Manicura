@@ -1,11 +1,14 @@
 package com.example.manicura.ui.nuevoServicio
 
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.view.animation.AnimationUtils
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -71,8 +74,8 @@ class FragmentNuevoServicio : Fragment() {
                 FancyToast.SUCCESS,
                 false
             ).show()
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.action_fragmentNuevoServicio_to_navigation_home)
+
+            activity?.onBackPressed()
         }
 
 
@@ -167,6 +170,7 @@ class FragmentNuevoServicio : Fragment() {
 
         //Agrego el servicio a la bd y vuelvo a la pantalla inicial
         binding.btnAgregarServicio.setOnClickListener {
+            var animShake = AnimationUtils.loadAnimation(binding.root.context, R.anim.vibrar)
             if (binding.actvNombreCliente.text.isNotEmpty()) {
                 if (binding.etCobro.text?.isNotEmpty()!!) {
                     if (viewModel.hacerManos.value!! or viewModel.hacerPies.value!!) {
@@ -175,13 +179,19 @@ class FragmentNuevoServicio : Fragment() {
                         this.lifecycleScope.launch {
                             viewModel.onGetIdCliente(elNombre)
                         }
-                    } else FancyToast.makeText(
-                        this.requireContext(),
-                        "Manos? Pies?",
-                        FancyToast.LENGTH_LONG,
-                        FancyToast.WARNING,
-                        false
-                    ).show()
+                    } else {
+                        FancyToast.makeText(
+                            this.requireContext(),
+                            "Manos? Pies?",
+                            FancyToast.LENGTH_LONG,
+                            FancyToast.WARNING,
+                            false
+                        ).show()
+                        chip_Manos.startAnimation(animShake)
+                        chip_Pies.startAnimation(animShake)
+                        til_MontoACobrar.error = null
+                        til_NombreCliente.error = null
+                    }
 
                 } else {
                     FancyToast.makeText(
@@ -191,7 +201,9 @@ class FragmentNuevoServicio : Fragment() {
                         FancyToast.WARNING,
                         false
                     ).show()
+                    til_MontoACobrar.startAnimation(animShake)
                     this.til_MontoACobrar.error = "Coloque el monto a cobrar!"
+                    til_NombreCliente.error = null
                 }
 
             } else {
@@ -202,6 +214,8 @@ class FragmentNuevoServicio : Fragment() {
                     FancyToast.WARNING,
                     false
                 ).show()
+
+                til_NombreCliente.startAnimation(animShake)
                 this.til_NombreCliente.error = "Elija o coloque un nombre de cliente!"
             }
 
@@ -210,10 +224,9 @@ class FragmentNuevoServicio : Fragment() {
 
         //Botón Atrás
         binding.ibAtras.setOnClickListener { view: View ->
-            Navigation.findNavController(view)
-                .navigate(R.id.action_fragmentNuevoServicio_to_navigation_home)
             Utils.hideSoftKeyBoard(binding.root.context, view)
-
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_fragmentEditarCliente_to_navigation_clientes)
         }
         return binding.root
     }
