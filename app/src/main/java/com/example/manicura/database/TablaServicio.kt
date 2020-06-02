@@ -2,18 +2,10 @@ package com.example.manicura.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 
 @Entity(
     tableName = "servicios_table",
-    primaryKeys = arrayOf("clienteId", "fecha"),
-    foreignKeys = arrayOf(
-        ForeignKey(
-            entity = TablaCliente::class,
-            parentColumns = arrayOf("clienteId"),
-            childColumns = arrayOf("clienteId")
-        )
-    )
+    primaryKeys = arrayOf("clienteId", "fecha")
 )
 data class TablaServicio(
     @ColumnInfo(name = "clienteId")

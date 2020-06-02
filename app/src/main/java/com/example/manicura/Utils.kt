@@ -12,8 +12,6 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoField
 import java.util.*
-import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
 
 object Utils {
 
@@ -40,7 +38,7 @@ object Utils {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun calcularPrimerDiaMes(horaActual: Long): Long {
-        val millisecondsSinceEpoch = System.currentTimeMillis()
+        val millisecondsSinceEpoch = horaActual
         val instant: Instant = Instant.ofEpochMilli(millisecondsSinceEpoch)
 
         val zoneId: ZoneId = ZoneId.of("America/Santiago")

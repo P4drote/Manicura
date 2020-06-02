@@ -84,7 +84,6 @@ class NuevoServicioViewModel(private val dataSource: ManicuraDAO, application: A
 
         _actualizarCliente.clienteId = _agregarServicio.clienteId
         _actualizarCliente.nombre = cliente
-        //_actualizarCliente.fechaUltimaVisita = 1585858726838   //(ESTO ES PARA PRUEBA)
         _actualizarCliente.fechaUltimaVisita = System.currentTimeMillis()
         _actualizarCliente.manos = hacerManos.value!!
         _actualizarCliente.pies = hacerPies.value!!

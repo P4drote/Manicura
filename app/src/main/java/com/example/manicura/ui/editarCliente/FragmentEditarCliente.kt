@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -51,6 +53,16 @@ class FragmentEditarCliente : Fragment() {
         viewManager = LinearLayoutManager(this.requireContext())
 
         binding.recyclerView.layoutManager = viewManager
+
+        var animacion = LayoutAnimationController(
+            AnimationUtils.loadAnimation(
+                binding.root.context,
+                R.anim.item_anim
+            )
+        )
+        animacion.delay = 0.20F
+        animacion.order = LayoutAnimationController.ORDER_NORMAL
+        binding.recyclerView.layoutAnimation = animacion
 
         if (identificadorCliente != null) {
             editarClienteViewModel.obtenerCliente(identificadorCliente)

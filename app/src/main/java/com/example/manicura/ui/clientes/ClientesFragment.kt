@@ -6,7 +6,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.manicura.R
 import com.example.manicura.database.ManicuraDataBase
-import com.example.manicura.database.TablaCliente
 import com.example.manicura.databinding.FragmentClientesBinding
 import com.example.manicura.ui.agregarCliente.AgregarClienteDialogo
 
@@ -48,6 +48,16 @@ class ClientesFragment : Fragment(), AdaptadorClientes.OnItemClickListener {
         binding.lifecycleOwner = this
         binding.framentClienteViewModel = clientesViewModel
         viewManager = LinearLayoutManager(this.context)
+
+        val animacion = LayoutAnimationController(
+            AnimationUtils.loadAnimation(
+                binding.root.context,
+                R.anim.item_anim
+            )
+        )
+        animacion.delay = 0.20F
+        animacion.order = LayoutAnimationController.ORDER_NORMAL
+        binding.recyclerView.layoutAnimation = animacion
 
         clientesViewModel.listaClientes.observe(viewLifecycleOwner, Observer {
             viewAdapterClientes = AdaptadorClientes(it, this.requireContext(), this)

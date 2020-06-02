@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.manicura.R
+import com.example.manicura.Utils
 import com.example.manicura.database.ManicuraDataBase
 import com.example.manicura.databinding.DialogAgregarClienteBinding
 import com.skydoves.transformationlayout.TransformationCompat
@@ -55,7 +56,9 @@ class AgregarClienteDialogo : DialogFragment() {
 
         agregarClienteViewModel.salida.observe(viewLifecycleOwner, Observer { salida ->
             toast()
+            Utils.hideSoftKeyBoard(binding.root.context, binding.root)
             dismiss()
+
         })
 
         return binding.root

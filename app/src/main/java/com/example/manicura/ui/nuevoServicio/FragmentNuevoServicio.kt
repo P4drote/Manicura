@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -22,6 +23,8 @@ import com.example.manicura.R
 import com.example.manicura.Utils
 import com.example.manicura.database.ManicuraDataBase
 import com.example.manicura.databinding.FragmentNuevoServicioBinding
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.fragment_nuevo_servicio.*
@@ -58,6 +61,21 @@ class FragmentNuevoServicio : Fragment() {
 
         binding.recyclerView.layoutManager = viewManager
 
+        var animacion = LayoutAnimationController(
+            AnimationUtils.loadAnimation(
+                binding.root.context,
+                R.anim.item_anim
+            )
+        )
+        animacion.delay = 0.20F
+        animacion.order = LayoutAnimationController.ORDER_NORMAL
+        binding.recyclerView.layoutAnimation = animacion
+
+        //ads
+        MobileAds.initialize(binding.root.context) {}
+        val mAdView = binding.adView
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         fun agregarServicio() {
             var nombreCliente = binding.actvNombreCliente.text.toString()
@@ -161,13 +179,6 @@ class FragmentNuevoServicio : Fragment() {
         })
 
 
-        //Botón AGREGAR CLIENTE llamo al diálogo para agregar un nuevo cliente
-//        binding.btnAgregarCliente.setOnClickListener {
-//            val fragmentManager = supportFragmentManager
-//            val dialogo = AgregarClienteDialogo()
-//            dialogo.show(fragmentManager, "")
-//        }
-
         //Agrego el servicio a la bd y vuelvo a la pantalla inicial
         binding.btnAgregarServicio.setOnClickListener {
             var animShake = AnimationUtils.loadAnimation(binding.root.context, R.anim.vibrar)
@@ -192,7 +203,6 @@ class FragmentNuevoServicio : Fragment() {
                         til_MontoACobrar.error = null
                         til_NombreCliente.error = null
                     }
-
                 } else {
                     FancyToast.makeText(
                         this.requireContext(),
@@ -218,15 +228,15 @@ class FragmentNuevoServicio : Fragment() {
                 til_NombreCliente.startAnimation(animShake)
                 this.til_NombreCliente.error = "Elija o coloque un nombre de cliente!"
             }
-
         }
-
 
         //Botón Atrás
         binding.ibAtras.setOnClickListener { view: View ->
             Utils.hideSoftKeyBoard(binding.root.context, view)
+            Thread.sleep(100)
             Navigation.findNavController(binding.root)
-                .navigate(R.id.action_fragmentEditarCliente_to_navigation_clientes)
+                .navigate(R.id.action_fragmentNuevoServicio_to_navigation_home)
+
         }
         return binding.root
     }

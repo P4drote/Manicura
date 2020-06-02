@@ -7,6 +7,8 @@ import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -34,9 +36,9 @@ class HomeFragment : Fragment() {
     private var inicioNotificacion: String = "INICIO_N"
     private var finNotificacion: String = "FIN_N"
     private var porcentaje: String = "PORCENTAJE"
-    private var TemporalGanancias: String = "TEMPORALGANANCIAS"
-    private var TemporalBrutas: String = "TEMPORALBRUTAS"
-    private var TemporalLiquidas: String = "TEMPORALLIQUIDAS"
+    private val TemporalGanancias: String = "TEMPORALGANANCIAS"
+    private val TemporalBrutas: String = "TEMPORALBRUTAS"
+    private val TemporalLiquidas: String = "TEMPORALLIQUIDAS"
 
 
     override fun onCreateView(
@@ -63,19 +65,25 @@ class HomeFragment : Fragment() {
         binding.homeViewModel = viewModel
         binding.lifecycleOwner = this
 
-//        viewModel.MontoTotal.observe(viewLifecycleOwner, Observer {
-//
-//        })
+        val animacion = LayoutAnimationController(
+            AnimationUtils.loadAnimation(
+                binding.root.context,
+                R.anim.item_anim
+            )
+        )
+        animacion.delay = 0.20F
+        animacion.order = LayoutAnimationController.ORDER_NORMAL
+        binding.recyclerView.layoutAnimation = animacion
 
         viewManager = LinearLayoutManager(this.context)
         prefs = PreferenceManager.getDefaultSharedPreferences(binding.root.context)
-        var inicio = prefs.getString(inicioNotificacion, "21")!!.toInt()
-        var fin = prefs.getString(finNotificacion, "35")!!.toInt()
-        var horaActual = System.currentTimeMillis()
-        var porcentaje = prefs.getString(porcentaje, "35")!!.toLong()
-        var temporalGanancias = prefs.getFloat(TemporalGanancias, 0.0F)
-        var temporalBrutas = prefs.getFloat(TemporalBrutas, 0.0F)
-        var temporalLiquidas = prefs.getFloat(TemporalLiquidas, 0.0F)
+        val inicio = prefs.getString(inicioNotificacion, "21")!!.toInt()
+        val fin = prefs.getString(finNotificacion, "35")!!.toInt()
+        val horaActual = System.currentTimeMillis()
+        val porcentaje = prefs.getString(porcentaje, "35")!!.toLong()
+        val temporalGanancias = prefs.getFloat(TemporalGanancias, 0.0F)
+        val temporalBrutas = prefs.getFloat(TemporalBrutas, 0.0F)
+        val temporalLiquidas = prefs.getFloat(TemporalLiquidas, 0.0F)
 
         viewModel.llenarNotificaciones(horaActual, inicio, fin)
 
@@ -84,7 +92,7 @@ class HomeFragment : Fragment() {
             recyclerView = binding.recyclerView.apply {
 
                 layoutManager = viewManager
-                0
+
                 adapter = viewAdapter
             }
         })
@@ -94,20 +102,21 @@ class HomeFragment : Fragment() {
         viewModel.colocarGanancias(porcentaje)
 
         viewModel.Ganancias.observe(viewLifecycleOwner, Observer { total ->
-            var intermedio = total!! * porcentaje / 100.0
+            val intermedio = total!! * porcentaje / 100.0
             if (intermedio != temporalGanancias.toDouble()) {
                 val animator =
                     ValueAnimator.ofFloat(temporalGanancias, intermedio.toFloat())
-                //viewModel.MontoTotal.value = intermedio.toFloat()
                 animator.duration = 2000
                 animator.addUpdateListener { animation ->
-                    tv_MontoTotal.text = dec.format(animation.animatedValue).toString()!!
+                    tv_MontoTotal?.text = dec.format(animation.animatedValue).toString()
                 }
                 animator.start()
                 editor.putFloat(TemporalGanancias, intermedio.toFloat())
                 editor.apply()
             }
-            tv_MontoTotal.text = dec.format(intermedio).toString()
+            if (intermedio != null) {
+                tv_MontoTotal.text = dec.format(intermedio).toString()
+            }
         })
 
         viewModel.calculo.observe(viewLifecycleOwner, Observer { cantidad ->
@@ -116,12 +125,11 @@ class HomeFragment : Fragment() {
                 animator.duration = 2000
                 animator.addUpdateListener { animation ->
                     viewModel.GananciasBrutas.value =
-                        dec.format(animation.animatedValue).toString()!!
+                        dec.format(animation.animatedValue).toString()
                 }
                 animator.start()
 
-                //var cifraInicial = viewModel.GananciasLiquidas.value?.toDouble() ?: 0.0
-                var calculo = (cantidad?.times(porcentaje) ?: 0.0) / 100.0
+                val calculo = (cantidad?.times(porcentaje) ?: 0.0) / 100.0
                 val animator2 = ValueAnimator.ofFloat(temporalLiquidas.toFloat(), calculo.toFloat())
                 animator2.duration = 2000
                 animator2.addUpdateListener { animation2 ->
@@ -129,8 +137,7 @@ class HomeFragment : Fragment() {
                         dec.format(animation2.animatedValue).toString()
                 }
                 animator2.start()
-                //viewModel.GananciasBrutas.value = dec.format(it).toString()!!
-                //viewModel.GananciasLiquidas.value = dec.format((cantidad?.times(porcentaje) ?: 0.0) / 100.0).toString()!!
+
                 editor.putFloat(TemporalBrutas, cantidad.toFloat())
                 editor.putFloat(TemporalLiquidas, calculo.toFloat())
                 editor.apply()
@@ -141,12 +148,13 @@ class HomeFragment : Fragment() {
         })
 
         binding.ibAjustes.setOnClickListener { view: View ->
+            view.clearAnimation()
             Navigation.findNavController(view)
                 .navigate(R.id.action_navigation_home_to_ajustesFragment2)
         }
 
         binding.fabAgregarServicio.setOnClickListener { view: View ->
-            //FragmentNuevoServicio.startActivity(requireContext(), transformationLayout_fab)
+            view.clearAnimation()
             Navigation.findNavController(view)
                 .navigate(R.id.action_navigation_home_to_fragmentNuevoServicio)
         }

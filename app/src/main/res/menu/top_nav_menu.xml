@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mesActual"
+        android:enabled="true"
+        android:icon="@drawable/calen_nro1"
+        android:title="Mes Actual"
+        app:cnb_iconColor="@color/colorPrimaryDark" />
+
+    <item
+        android:id="@+id/mesAnterior"
+        android:icon="@drawable/calen_anterior"
+        android:title="Mes Anterior"
+        app:cnb_iconColor="@color/colorPrimaryDark" />
+
+    <item
+        android:id="@+id/Todos"
+        android:icon="@drawable/calen_todos"
+        android:title="Todos"
+        app:cnb_iconColor="@color/colorPrimaryDark" />
+</menu>

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.manicura.Notificacion
 import com.example.manicura.Servicios
+import com.example.manicura.TodosServicios
 
 @Dao
 interface ManicuraDAO {
@@ -46,4 +47,11 @@ interface ManicuraDAO {
 
     @Query("SELECT * FROM cliente_table WHERE clienteId = :ClienteId")
     fun getCliente(ClienteId: Long): TablaCliente
+
+    @Query("SELECT cliente_table.nombre_cliente, servicios_table.clienteId, servicios_table.fecha, servicios_table.montoPagado, servicios_table.pies, servicios_table.manos  FROM cliente_table, servicios_table WHERE (fecha > :fechainicial and fecha < :fechafinal) AND (cliente_table.clienteId = servicios_table.clienteId) ORDER BY fecha DESC")
+    fun getServiciosPorFecha(fechainicial: Long, fechafinal: Long): List<TodosServicios>
+
+
+    @Query("SELECT cliente_table.nombre_cliente, servicios_table.clienteId, servicios_table.fecha, servicios_table.montoPagado, servicios_table.manos, servicios_table.pies  FROM cliente_table, servicios_table WHERE cliente_table.clienteId = servicios_table.clienteId ORDER BY fecha DESC")
+    fun getTodosServicios(): List<TodosServicios>
 }

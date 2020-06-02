@@ -15,7 +15,11 @@
             app:destination="@id/ajustesFragment2" />
         <action
             android:id="@+id/action_navigation_home_to_fragmentNuevoServicio"
-            app:destination="@id/fragmentNuevoServicio" />
+            app:destination="@id/fragmentNuevoServicio"
+            app:enterAnim="@anim/enter_activity"
+            app:exitAnim="@anim/exit_activity"
+            app:popEnterAnim="@anim/enter_activity"
+            app:popExitAnim="@anim/exit_activity" />
     </fragment>
 
     <fragment
@@ -40,7 +44,11 @@
         tools:layout="@layout/fragment_ajustes">
         <action
             android:id="@+id/action_ajustesFragment2_to_navigation_home"
-            app:destination="@id/navigation_home" />
+            app:destination="@id/navigation_home"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/fragmentNuevoServicio"
@@ -48,7 +56,11 @@
         android:label="FragmentNuevoServicio">
         <action
             android:id="@+id/action_fragmentNuevoServicio_to_navigation_home"
-            app:destination="@id/navigation_home" />
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/exit_activity"
+            app:exitAnim="@anim/enter_activity"
+            app:popEnterAnim="@anim/exit_activity"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/fragmentEditarCliente"

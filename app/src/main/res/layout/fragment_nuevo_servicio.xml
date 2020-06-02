@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="NuevoServicioViewModel"
             type="com.example.manicura.ui.nuevoServicio.NuevoServicioViewModel" />
@@ -72,23 +71,30 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_NombreCliente"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:inputType="textCapWords"
+            app:boxCornerRadiusBottomEnd="8sp"
+            app:boxCornerRadiusBottomStart="8sp"
+            app:boxCornerRadiusTopEnd="8sp"
+            app:boxCornerRadiusTopStart="8sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/cardView">
+            app:layout_constraintTop_toTopOf="@+id/imageView">
 
             <AutoCompleteTextView
                 android:id="@+id/actv_NombreCliente"
                 style="@style/Widget.MaterialComponents.AutoCompleteTextView.FilledBox"
-                android:layout_height="wrap_content"
-            android:fontFamily="@font/alegreya_sans_sc"
-                android:singleLine="true"
                 android:layout_width="match_parent"
-            android:hint="@string/hint_NombredeCliente" />
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alegreya_sans_sc"
+                android:hint="@string/hint_NombredeCliente"
+                android:inputType="textCapWords"
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,23 +129,28 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_MontoACobrar"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            app:boxCornerRadiusBottomEnd="8sp"
+            app:boxCornerRadiusBottomStart="8sp"
+            app:boxCornerRadiusTopEnd="8sp"
+            app:boxCornerRadiusTopStart="8sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_dinero"
             app:layout_constraintEnd_toStartOf="@+id/btnAgregarServicio"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/chip_Manos">
+            app:layout_constraintStart_toEndOf="@+id/iv_dinero"
+            app:layout_constraintTop_toTopOf="@+id/iv_dinero">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_Cobro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/alegreya_sans_sc"
-                android:singleLine="true"
                 android:hint="Monto a Cobrar"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -160,9 +171,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/adView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
             tools:itemCount="3"
@@ -180,7 +192,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/iv_dinero"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginStart="16dp"
@@ -202,6 +214,17 @@
             app:cornerRadius="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/chip_Pies" />
+
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/cardView"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
