@@ -14,7 +14,7 @@ import kotlinx.coroutines.*
 class NuevoServicioViewModel(private val dataSource: ManicuraDAO, application: Application) :
     AndroidViewModel(application) {
 
-    private var viewModelJob = Job()
+    var viewModelJob = Job()
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
@@ -68,7 +68,6 @@ class NuevoServicioViewModel(private val dataSource: ManicuraDAO, application: A
         viewModelScope.launch {
             val nuevoCliente = TablaCliente()
             nuevoCliente.nombre = nombreCliente
-            nuevoCliente.fechaUltimaVisita = 0L
             withContext(Dispatchers.IO) {
                 dataSource.insertCliente(nuevoCliente)
             }

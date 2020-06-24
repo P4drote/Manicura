@@ -105,7 +105,8 @@ class FragmentNuevoServicio : Fragment() {
             val close = viewBottonLayout.findViewById<Button>(R.id.btn_cancel)
             val agregar = viewBottonLayout.findViewById<Button>(R.id.btn_agregarCliente)
             val mensaje = viewBottonLayout.findViewById<TextView>(R.id.tvMensaje)
-            mensaje.text = Nombre + " no existe en la base de datos. Deseas Agregarl@? "
+            val mensajeDialog = "$Nombre no existe en la base de datos. Deseas Agregarl@?"
+            mensaje.text = mensajeDialog
             close.setOnClickListener {
                 dialogo.dismissWithAnimation = true
                 dialogo.dismiss()
@@ -132,7 +133,7 @@ class FragmentNuevoServicio : Fragment() {
         //Al seleccionar cliente reviso en la bd los servicios que tenga y lleno el recyclerView
         binding.actvNombreCliente.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
-                var clienteSeleccionado = binding.actvNombreCliente.text.toString()
+                val clienteSeleccionado = binding.actvNombreCliente.text.toString()
                 viewModel.nombreDeClienteClick(clienteSeleccionado)
             }
 
@@ -240,6 +241,7 @@ class FragmentNuevoServicio : Fragment() {
         }
         return binding.root
     }
+
 }
 
 

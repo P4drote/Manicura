@@ -32,6 +32,7 @@ class AdaptadorServicios(
 ) : RecyclerView.Adapter<AdaptadorServicios.ViewHolder>() {
 
     class ViewHolder(var vista: View, var contexto: Context) : RecyclerView.ViewHolder(vista) {
+
         @RequiresApi(Build.VERSION_CODES.N)
         fun bind(servicios: TodosServicios, clickListener: OnItemClickListener) {
             val dec = DecimalFormat.getCurrencyInstance(Locale.CANADA)

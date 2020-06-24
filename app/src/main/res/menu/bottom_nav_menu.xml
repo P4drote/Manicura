@@ -16,4 +16,9 @@
         android:icon="@drawable/dedos"
         android:title="@string/servicios" />
 
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/ic_tune_white_24dp"
+        android:title="@string/Titulo_Ajustes" />
+
 </menu>

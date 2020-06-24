@@ -292,7 +292,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:maxImageSize="24dp"
             app:srcCompat="@mipmap/nailspaint"
-            app:tint="#FFFFFFFF" />
+            app:tint="@color/white" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
